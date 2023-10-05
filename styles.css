@@ -1,0 +1,194 @@
+body {
+    display: grid;
+    border: black solid 5px;
+    margin: 0;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #21482E;
+    font-family: 'Patrick Hand', cursive;
+    color: #FDF5E6;
+    font-size: 30px;
+    text-align: center;
+    
+    
+    }
+    
+    
+    button {
+    background-color: #21482E;
+    color: #FDF5E6;
+    border: none;
+    font-size: 1.5rem;
+    font-family: 'Patrick Hand', cursive;
+    border-radius: 6%;
+    width: 49%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 1% 0 1% 0;
+    }
+    
+    
+    button:hover {
+    cursor: pointer;
+    opacity: 80%;
+    }
+    
+    .main-btn{
+        box-shadow: none;
+    }
+    
+    
+    #dialogBtn {
+    width: 50%;
+    justify-self: center;
+    animation: flash 3s infinite;
+    margin-bottom: 50px;
+    
+    }
+    
+    
+    @keyframes flash {
+    0%, 50%, 100% {
+    opacity:1;
+    }
+    
+    
+    25%, 75% {
+    opacity: 0;
+    }
+    }
+    
+   
+    
+    dialog {
+        background-color: #FDF5E6;
+        width: 50vh;
+        height: 50vh;
+        border: none;
+        border-radius: 2%;
+    }
+    
+    
+    form {
+    display: grid;
+    grid-template-rows: 1fr, 1fr, auto;
+    gap: 15%;
+    }
+    
+    
+    .option-ctr {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap:2%;
+    }
+    .submit-btn-ctr, .option-ctr {
+    width: 100%;
+    }
+    .player.btn-ctr {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    gap: 2%;
+    border: solid black 2px
+    }
+    .player-mark{
+    font-size: 4rem;
+    color:#21482E;
+    }
+    
+    
+    #submit-btn {
+    width: 49%;
+    }
+    
+    
+    #error-msg {
+    font-size: 0.8rem;
+    color: rgb(236, 84, 109);
+    margin-bottom: 2%;
+    }
+    
+    
+    #game-container {
+    display: grid;
+    grid-template-columns: repeat(3,150px);
+    grid-template-rows: repeat(3,150px);
+    height: 450px;
+    max-height: 450px;
+    width: 450px;
+    max-width: 450px;
+    }
+    
+    
+    .cell {
+    display: grid;
+    border: #FDF5E6 solid 2px;
+    text-align: center;
+    align-content: center;
+    font-size: 7rem;
+    }
+    
+    
+    .cell:first-child,
+    .cell:nth-child(2),
+    .cell:nth-child(3) {
+    border-top: none;
+    }
+    
+    
+    .cell:nth-child(3n+1) {
+    border-left: none
+    }
+    
+    
+    .cell:nth-child(3n+3) {
+    border-right: none
+    }
+    
+    
+    .cell:last-child,
+    .cell:nth-child(8),
+    .cell:nth-child(7) {
+    border-bottom: none;
+    }
+    
+    
+    #player-name-ctr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+    }
+    
+    
+    .player-names {
+    display: grid;
+    border: black 1px solid;
+    justify-content: center;
+    gap:10px;
+    margin-bottom: 30px;
+    }
+    
+    
+    input {
+    width: 180px;
+    }
+    
+    #winner-ctr {
+        display: grid;
+        height: 100%;
+        
+    }
+
+    .win-btn {
+        
+    }
+
+    #winner {
+        font-size: 2.5rem;
+        
+    }
+
+    .play-agn-ctr {
+        margin-top: 15%;
+    }
+
+   

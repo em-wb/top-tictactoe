@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TicTac Toe</title>
+        <script src="main.js" defer></script>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Tic Tac Toe</h1>
+        <button class="main-btn" id="dialogBtn">Choose your Players</button>
+        <div id="game-container">
+                <div class="cell" id="cell0"></div>
+                <div class="cell" id="cell1"></div>
+                <div class="cell" id="cell2"></div>
+                <div class="cell" id="cell3"></div>
+                <div class="cell" id="cell4"></div>
+                <div class="cell" id="cell5"></div>
+                <div class="cell" id="cell6"></div>
+                <div class="cell" id="cell7"></div>
+                <div class="cell" id="cell8"></div>
+        </div>
+        <div>
+            <button class="play-agn main-btn">Restart</button>
+        </div>
+        <dialog id="player-dialog">
+            <form id="player-form">
+                <div class="option-ctr">
+                    <div class="player-mark">x</div>
+                    <div class="player-btn-ctr" id="one">
+                    <button class="player-btn" id="player1">Player 1</button>
+                    <button class="player-btn" id="bot1">Bot 1</button>
+                    </div>
+                </div>
+                 <div class="option-ctr">
+                    <div class="player-mark">o</div>
+                    <div class="player-btn-ctr" id="two">
+                    <button class="player-btn" id="player2">Player 2</button>
+                    <button class="player-btn" id="bot2">Bot 2</button>
+                    </div>
+                </div>
+                <div class="submit-btn-ctr">
+                    <div id="error-msg"></div>
+                    <button id="submit-btn" type="submit">Submit Players</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="winner-dialog">
+            <div id="winner-ctr">
+                <h2>And the winner is...</h2>
+                <div id="winner"></div>
+                <div class="play-agn-ctr">
+                    <button class="play-agn win-btn">Restart</button>
+                </div>
+            </div>
+        </dialog>
+    </body>
+</html>
