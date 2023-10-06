@@ -31,13 +31,14 @@ const gameBoard = (()=> {
         ]
 
     //Add mark to game view, add mark to corresponding position in board array, call checkWinners
-    function render(cell, mark, index) {
+    function render(cell, mark, index, type) {
         if (mark!==undefined) {
-        if(board[index]==='') {
-        board[index]= mark
-        cell.innerText = mark
-        checkWinners()
-        }
+            if(board[index]==='') {
+            board[index]= mark
+            console.log('boardrender', board)
+            cell.innerText = mark
+            checkWinners()
+            }
         else {return false}
     }
     }
@@ -45,16 +46,21 @@ const gameBoard = (()=> {
     // Check for winners and call announceWinner 
     function checkWinners() {
         return winCombos.some(combo => {
-        if (combo.every(pos => board[pos]==='x')) {
+        if (combo.every(pos => board[pos]=='x')) {
             let playerOne = game.getPlayerOne()
             game.announceWinner(playerOne)
-        } else if (combo.every(pos=> board[pos]==='o')) {
+        } else if (combo.every(pos=> board[pos]=='o')) {
             let playerTwo = game.getPlayerTwo()
             game.announceWinner(playerTwo)
+        } else if (combo.every(pos => board[pos]!=='x')&& combo.every(pos=> board[pos]!=='o') && !board.includes('')) {
+            game.announceWinner()
         } else if (board.includes('')) {
-            return null
-        } else if (!board.includes('')) game.announceWinner()
-        })
+            setTimeout(getCheckBot,800)
+        }
+        })}
+    
+    function getCheckBot() {
+        return game.checkBot()
     }
 
     return {
@@ -74,6 +80,8 @@ const game = (() => {
         let playerTwo = null
         let turn = true
 
+        
+
         const cells = document.querySelectorAll('.cell');
         const dialogBtn = document.getElementById('dialogBtn');
         const playerDialog = document.getElementById('player-dialog')
@@ -85,9 +93,9 @@ const game = (() => {
         const winnerDialog = document.getElementById('winner-dialog')
         const winner = document.getElementById('winner')
         const restarts = document.querySelectorAll('.play-agn')
-        const nameCtr = document.getElementById('.name-ctr')
         const nameOne = document.getElementById('player1-name')
         const nameTwo = document.getElementById('player2-name')
+        const turnDisplay =document.getElementById('turn-display')
 
 
         // Open dialog to choose players
@@ -144,8 +152,8 @@ const game = (() => {
             }
             let siblingBtn = Array.from(e.target.parentElement.children).find(child => child !== e.target)
             if (siblingBtn) {
-            siblingBtn.style.backgroundColor = "#21482E";
-            siblingBtn.dataset.indexNumber = 0
+                siblingBtn.style.backgroundColor = "#21482E";
+                siblingBtn.dataset.indexNumber = 0
             }
             console.log('p1', e.target.dataset.indexNumber)
             console.log('p2',siblingBtn.dataset.indexNumber)
@@ -155,20 +163,21 @@ const game = (() => {
         function submitPlayers(e) {
             e.preventDefault()
             if (choosePlayerOne.dataset.indexNumber==1){
-                playerOne = (nameOne == '')? Player('Player 1', 'x') : Player(nameOne.value, 'x')
-            }else if (choosePlayerOne.dataset.indexNumber==0 ) playerOne = Player('Bot 1', 'x')
+                playerOne = (nameOne.value === '')? Player('Player 1', 'x', 'human') : Player(nameOne.value, 'x', 'human')
+            }else if (choosePlayerOne.dataset.indexNumber==0 ) playerOne = Player('Bot 1', 'x', 'bot')
             console.log(playerOne)
 
             if (choosePlayerTwo.dataset.indexNumber==1) {
-                playerTwo = (nameOne == '')? Player('Player 2', 'x') : Player(nameTwo.value, 'x')      
-            } else if (choosePlayerTwo.dataset.indexNumber==0) playerTwo = Player('Bot 2', 'x')
+                playerTwo = (nameOne.value === '')? Player('Player 2', 'o', 'human') : Player(nameTwo.value, 'o', 'human')      
+            } else if (choosePlayerTwo.dataset.indexNumber==0) playerTwo = Player('Bot 2', 'o', 'bot')
                 console.log(playerTwo)
 
             if (playerOne!==null && playerTwo!==null) {
                 playerDialog.close()
                 errorMsg.innerText = ""
                 gameBoard.resetBoard()
-                resetPlay()
+                turnDisplay.innerText= "TURN: " + playerOne.name
+                setTimeout(checkBot,500)
             } else {errorMsg.innerText = "*Please select players!"}
             return {playerOne, playerTwo}
         }
@@ -184,31 +193,82 @@ const game = (() => {
     
         // Called when player clicks on tictactoe cell. Alternates player turns and calls render OR endGame if board array is full 
         function playTurn(cell) {
-            console.log(turn, "first")
-            const gameBoardArray = gameBoard.getBoard()
-            console.log(gameBoardArray)
+            console.log(turn)
             const index = cell.id.slice(4,5)
             console.log(index)
-            if (gameBoardArray.includes('')) {
-                if (turn===false){
+            // if (gameBoardArray.includes('')) {
+                if (turn === true && playerOne.type == 'human') {
+                    turn = false
+                    gameBoard.render(cell, playerOne.mark, index)
+                    turnDisplay.innerText="TURN: " + playerTwo.name
+                }else if (turn === false && playerTwo.type == 'human'){
                     turn=true
                     gameBoard.render(cell, playerTwo.mark, index)
-                }
-                else {
-                    turn = false
-                    gameBoard.render(cell, playerOne.mark, index)}
-            } else {endGame} 
+                    turnDisplay.innerText="TURN: " + playerOne.name
+            
+        }}
+
+        function checkBot() {
+            if (playerOne.type=='bot' && turn == true || playerTwo.type=='bot' && turn == false) {
+                randomPickBot()
+            }
         }
+
+        
+        function randomPickBot() {
+            let options = [0,1,2,3,4,5,6,7,8]
+            let randomI = options[Math.floor(Math.random() * options.length)];
+            console.log(randomI)
+            let botCell = cells[randomI]
+            botTurn(botCell, randomI)
+        }
+
+        function botTurn(botCell,randomI) {
+            const gameBoardArray = gameBoard.getBoard()
+            console.log('bot before',gameBoardArray)
+            if (gameBoardArray[randomI] !== '') randomPickBot()
+            else {
+                if (turn===true) {
+                    turn=false
+                    turnDisplay.innerText="TURN: " + playerTwo.name
+                    gameBoard.render(botCell, playerOne.mark, randomI, playerOne.type)
+                } else if (turn==false) {
+                    turn=true
+                    gameBoard.render(botCell, playerTwo.mark, randomI, playerTwo.type)
+                    turnDisplay.innerText="TURN: " + playerOne.name
+                }
+            }}
+            
+            
+    
+               
+
+
+        //        gameBoard.render(randomCell, playerOne.mark, )
+        //         cells.forEach(cell => {
+        //             for(let i=0; i<9; i++) {
+        //                 if (cell.innerText !== '') {
+        //                 cell.dataset.indexNumber = cell[i]
+        //                 }
+        //                 }
+        //         })
+        //         cells.forEach(cell => {
+        //             if (cell.dataset.indexNumber !== undefined)
+        //         })
+        //         // let randomCell = option[Math.floor(Math.random() * option.length)];
+                
+        //     }
+
+        // }
         
         // Called when a player wins OR the board array is full. 
         function announceWinner(result) {
             let winName = "No one! It's a draw."
             if (result == playerOne) {
                 winName = playerOne.name.toString()
-            }
-            else if (result == playerTwo){
-                winName = playerTwo.name 
-            }
+            } else if (result == playerTwo){
+                winName = playerTwo.name.toString()
+            } 
             winner.innerText = winName
             winnerDialog.showModal()
         }    
@@ -222,12 +282,14 @@ const game = (() => {
             turn = true
             nameOne.classList.add('hidden')
             nameTwo.classList.add('hidden')
+            turnDisplay.innerText=''
             playerBtns.forEach(playerBtn => {playerBtn.style.backgroundColor = "#21482E", playerBtn.dataset.indexNumber = 3})
             cells.forEach(cell=> cell.innerText='')
         }
 
 
-        return {submitPlayers:submitPlayers, announceWinner: announceWinner, getPlayerOne:getPlayerOne, getPlayerTwo:getPlayerTwo} 
+        return {submitPlayers:submitPlayers, announceWinner: announceWinner,
+            getPlayerOne:getPlayerOne, getPlayerTwo:getPlayerTwo, randomPickBot:randomPickBot, checkBot:checkBot}
 
     
 })()
@@ -235,9 +297,12 @@ const game = (() => {
 
 
 // PLAYER FACTORY
-const Player = (name, mark) => {
+const Player = (name, mark, type) => {
 return {
 name,
 mark,
+type
 }
 }
+
+
