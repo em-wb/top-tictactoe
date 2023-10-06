@@ -72,7 +72,7 @@ body {
     form {
     display: grid;
     grid-template-rows: 1fr, 1fr, auto;
-    gap: 15%;
+    gap: 8%;
     }
     
     
@@ -81,15 +81,39 @@ body {
     grid-template-rows: 1fr auto;
     gap:2%;
     }
+
+    .name-ctr{
+        display:flex;
+        margin-top: 2%;
+        width: 49%;
+        height: 25px;
+        justify-content: center;
+       }
+    
+    input {
+    width: 100%;
+    border: none;
+    background-color: #B0AFAE;
+    color: #FDF5E6;
+    padding: 2%;
+    border-radius: 2%;
+    
+    }
+
+    ::placeholder {
+    color: #FDF5E6;
+    opacity: 1;
+    }
+
+    .hidden {
+        display: none;
+    }
+    
     .submit-btn-ctr, .option-ctr {
     width: 100%;
     }
-    .player.btn-ctr {
-    display: grid;
-    grid-template-columns: 49% 49%;
-    gap: 2%;
-    border: solid black 2px
-    }
+
+   
     .player-mark{
     font-size: 4rem;
     color:#21482E;
@@ -102,9 +126,10 @@ body {
     
     
     #error-msg {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: rgb(236, 84, 109);
-    margin-bottom: 2%;
+    margin-bottom: 4%;
+    height:5px;
     }
     
     
@@ -168,9 +193,6 @@ body {
     }
     
     
-    input {
-    width: 180px;
-    }
     
     #winner-ctr {
         display: grid;
