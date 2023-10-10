@@ -1,9 +1,9 @@
 # Tic-Tac-Toe 
 
-A task from <link href="https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe">The Odin Project</link>. 
+A task from <a href="https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe">The Odin Project</a>. 
 
 A tic-tac-toe game using modules and factories. 
 
-See the project live <link href="https://em-wb.github.io/top-tictactie/">here</link> 👀
+See the project live <a href="https://em-wb.github.io/top-tictactoe/">here</a> 👀
 
 Updates required: Bot play is currently random, rather than smart. 
