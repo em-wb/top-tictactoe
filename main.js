@@ -54,11 +54,10 @@ const gameBoard = (()=> {
         if (!board.includes('')) {
             return game.announceWinner()
         } else {
-            setTimeout(getCheckBot,100)
+            setTimeout(getCheckBot,200)
         }
         })}
 
-    //combo.every(pos => board[pos]!='x') && combo.every(pos=> board[pos]!='o') && 
     function getCheckBot() {
         return game.checkBot()
     }
@@ -154,7 +153,7 @@ const game = (() => {
             playerOne = (nameOne.value === '')? Player('Player 1', 'x', 'human') : Player(nameOne.value, 'x', 'human')
             if (choosePlayerTwo.dataset.indexNumber==1) {
                 playerTwo = (nameOne.value === '')? Player('Player 2', 'o', 'human') : Player(nameTwo.value, 'o', 'human')      
-            } else if (choosePlayerTwo.dataset.indexNumber==0) playerTwo = Player('Bot 2', 'o', 'bot')
+            } else if (choosePlayerTwo.dataset.indexNumber==0) playerTwo = Player('🤖', 'o', 'bot')
             if (playerTwo!==null) {
                 playerDialog.close()
                 errorMsg.innerText = ""
@@ -223,6 +222,7 @@ const game = (() => {
             } 
             winner.innerText = winName
             winnerDialog.showModal()
+            turn=true
         }    
 
         // Reset gameplay: player allocation, turn allocation, playerBtns, tictactoe cells.
