@@ -45,17 +45,18 @@ const gameBoard = (()=> {
 
     // Check for winners and call announceWinner 
     function checkWinners() {
-        return winCombos.some(combo => {
+        console.log('wincheck')
+        winCombos.some(combo => {
         if (combo.every(pos => board[pos]=='x')) {
             let playerOne = game.getPlayerOne()
-            game.announceWinner(playerOne)
+            return game.announceWinner(playerOne)
         } else if (combo.every(pos=> board[pos]=='o')) {
             let playerTwo = game.getPlayerTwo()
-            game.announceWinner(playerTwo)
+            return game.announceWinner(playerTwo)
         } else if (combo.every(pos => board[pos]!=='x')&& combo.every(pos=> board[pos]!=='o') && !board.includes('')) {
-            game.announceWinner()
-        } else if (board.includes('')) {
-            setTimeout(getCheckBot,800)
+            return game.announceWinner()
+        } else if (combo.every(pos => board[pos]!=='x')&& combo.every(pos=> board[pos]!=='o') && board.includes('')) {
+            setTimeout(getCheckBot,200)
         }
         })}
     
@@ -177,7 +178,7 @@ const game = (() => {
                 errorMsg.innerText = ""
                 gameBoard.resetBoard()
                 turnDisplay.innerText= "TURN: " + playerOne.name
-                setTimeout(checkBot,500)
+                setTimeout(checkBot,100)
             } else {errorMsg.innerText = "*Please select players!"}
             return {playerOne, playerTwo}
         }
@@ -196,7 +197,6 @@ const game = (() => {
             console.log(turn)
             const index = cell.id.slice(4,5)
             console.log(index)
-            // if (gameBoardArray.includes('')) {
                 if (turn === true && playerOne.type == 'human') {
                     turn = false
                     gameBoard.render(cell, playerOne.mark, index)
@@ -205,13 +205,18 @@ const game = (() => {
                     turn=true
                     gameBoard.render(cell, playerTwo.mark, index)
                     turnDisplay.innerText="TURN: " + playerOne.name
+                }else return false
             
-        }}
+        }
 
         function checkBot() {
-            if (playerOne.type=='bot' && turn == true || playerTwo.type=='bot' && turn == false) {
+            console.log('botcheck')
+            let gameBoardArray = gameBoard.getBoard()
+            if (!gameBoardArray.includes('')) gameBoard.checkWinners()
+            else if (playerOne.type=='bot' && turn == true || playerTwo.type=='bot' && turn == false) {
                 randomPickBot()
             }
+            else return false
         }
 
         
@@ -229,37 +234,17 @@ const game = (() => {
             if (gameBoardArray[randomI] !== '') randomPickBot()
             else {
                 if (turn===true) {
+                    console.log('b1')
                     turn=false
                     turnDisplay.innerText="TURN: " + playerTwo.name
                     gameBoard.render(botCell, playerOne.mark, randomI, playerOne.type)
                 } else if (turn==false) {
+                    console.log('b2')
                     turn=true
                     gameBoard.render(botCell, playerTwo.mark, randomI, playerTwo.type)
                     turnDisplay.innerText="TURN: " + playerOne.name
                 }
             }}
-            
-            
-    
-               
-
-
-        //        gameBoard.render(randomCell, playerOne.mark, )
-        //         cells.forEach(cell => {
-        //             for(let i=0; i<9; i++) {
-        //                 if (cell.innerText !== '') {
-        //                 cell.dataset.indexNumber = cell[i]
-        //                 }
-        //                 }
-        //         })
-        //         cells.forEach(cell => {
-        //             if (cell.dataset.indexNumber !== undefined)
-        //         })
-        //         // let randomCell = option[Math.floor(Math.random() * option.length)];
-                
-        //     }
-
-        // }
         
         // Called when a player wins OR the board array is full. 
         function announceWinner(result) {

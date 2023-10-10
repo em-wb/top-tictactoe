@@ -10,8 +10,6 @@ body {
     color: #FDF5E6;
     font-size: 30px;
     text-align: center;
-    
-    
     }
     
     
@@ -37,7 +35,8 @@ body {
         box-shadow: none;
     }
     
-    
+  /* Choose player diaglog  */
+  
     #dialogBtn {
     width: 50%;
     justify-self: center;
@@ -46,19 +45,15 @@ body {
     
     }
     
-    
     @keyframes flash {
     0%, 50%, 100% {
     opacity:1;
     }
     
-    
     25%, 75% {
     opacity: 0;
     }
     }
-    
-   
     
     dialog {
         background-color: #FDF5E6;
@@ -66,16 +61,13 @@ body {
         height: 50vh;
         border: none;
         border-radius: 2%;
-        /* opacity: 50%; */
     }
-    
-    
+      
     form {
     display: grid;
     grid-template-rows: 1fr, 1fr, auto;
     gap: 8%;
     }
-    
     
     .option-ctr {
     display: grid;
@@ -133,6 +125,8 @@ body {
     height:5px;
     }
     
+/* Gamplay */
+
     #turn-display {
         font-size: 1.2rem;
         height: 5px;
@@ -199,18 +193,21 @@ body {
     }
     
     
-    
+/* Winner dialog  */
+
     #winner-ctr {
         display: grid;
         height: 100%;
         
     }
 
-   
-
     #winner {
         font-size: 2.5rem;
         
+    }
+
+    #winner-dialog {
+        opacity: 93%;
     }
 
     .play-agn-ctr {
