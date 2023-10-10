@@ -12,7 +12,12 @@ body {
     text-align: center;
     }
     
-    
+    #player1 {
+        background-color: #6B8E23;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        color: #FDF5E6;
+        border-radius: 6%;
+    }
     button {
     background-color: #21482E;
     color: #FDF5E6;
@@ -78,10 +83,14 @@ body {
     .name-ctr{
         display:flex;
         margin-top: 2%;
-        width: 49%;
         height: 25px;
         justify-content: center;
        }
+   
+    #name2{
+        width: 49%;
+    }
+       
     
     input {
     width: 100%;
@@ -90,7 +99,6 @@ body {
     color: #FDF5E6;
     padding: 2%;
     border-radius: 2%;
-    
     }
 
     ::placeholder {
@@ -176,22 +184,7 @@ body {
     border-bottom: none;
     }
     
-    
-    #player-name-ctr {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px
-    }
-    
-    
-    .player-names {
-    display: grid;
-    border: black 1px solid;
-    justify-content: center;
-    gap:10px;
-    margin-bottom: 30px;
-    }
-    
+
     
 /* Winner dialog  */
 
